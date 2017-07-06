@@ -235,10 +235,3 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
-
-# SPA project ignores
-src/Web/WebSPA/logs/*
-src/Web/WebSPA/node_modules/
-src/Web/WebSPA/bower_components/
-src/Web/WebSPA/app/jspm_packages
-src/Web/WebSPA/tmp
