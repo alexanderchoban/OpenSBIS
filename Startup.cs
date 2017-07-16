@@ -32,6 +32,11 @@ namespace OpenSBIS
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // add transients
+            services.AddTransient<ICompanyRepository, CompanyRepository>();
+            services.AddTransient<IInventoryLocationRepository, InventoryLocationRepository>();
+            services.AddTransient<IProductRepository, ProductRepository>();
+
             // Add framework services.
             services.AddMvc();
 

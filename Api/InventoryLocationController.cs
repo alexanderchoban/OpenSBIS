@@ -7,37 +7,37 @@ using OpenSBIS.Models;
 namespace OpenSBIS.Controllers
 {
     [Route("api/[controller]")]
-    public class ProductController : Controller
+    public class InventoryLocationController : Controller
     {
 
         private readonly ILogger _logger;
-        private readonly IProductRepository _productRepository;
+        private readonly IInventoryLocationRepository _inventoryLocationRepository;
 
-        public ProductController(ILogger<ProductController> logger, IProductRepository productRepository)
+        public InventoryLocationController(ILogger<InventoryLocationController> logger, IInventoryLocationRepository inventoryLocationRepository)
         {
             _logger = logger;
-            _productRepository = productRepository;
+            _inventoryLocationRepository = inventoryLocationRepository;
         }
 
         /// <summary>
-        /// Gets all products.
+        /// Gets all inventoryLocations.
         /// </summary>
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_productRepository.GetAll());
+            return Ok(_inventoryLocationRepository.GetAll());
         }
 
         /// <summary>
-        /// Gets product by id.
+        /// Gets inventoryLocation by id.
         /// </summary>
         /// <param name="id">
-        /// Product id.
+        /// InventoryLocation id.
         /// </param>
-        [HttpGet("{id}", Name = "GetProduct")]
+        [HttpGet("{id}", Name = "GetInventoryLocation")]
         public IActionResult Get(long id)
         {
-            var data = _productRepository.Get(id);
+            var data = _inventoryLocationRepository.Get(id);
 
             if (data == null)
             {
@@ -48,32 +48,32 @@ namespace OpenSBIS.Controllers
         }
 
         /// <summary>
-        /// Add a new product.
+        /// Add a new inventoryLocation.
         /// </summary>
         /// <param name="item">
-        /// The product to be added.
+        /// The inventoryLocation to be added.
         /// </param>
-        /// <returns>The new product</returns>
+        /// <returns>The new inventoryLocation</returns>
         [HttpPost]
-        public IActionResult Post([FromBody] Product item)
+        public IActionResult Post([FromBody] InventoryLocation item)
         {
-            var id = _productRepository.Add(item);
-            var data = _productRepository.Get(id);
+            var id = _inventoryLocationRepository.Add(item);
+            var data = _inventoryLocationRepository.Get(id);
 
-            return CreatedAtRoute("GetProduct", new { id = id }, data);
+            return CreatedAtRoute("GetInventoryLocation", new { id = id }, data);
         }
 
         /// <summary>
-        /// Updates an product.
+        /// Updates an inventoryLocation.
         /// </summary>
         /// <param name="id">
-        /// The id of the product.
+        /// The id of the inventoryLocation.
         /// </param>
         /// <param name="item">
-        /// The updated product.
+        /// The updated inventoryLocation.
         /// </param>
         [HttpPut("{id}")]
-        public IActionResult Put(long id, [FromBody] Product item)
+        public IActionResult Put(long id, [FromBody] InventoryLocation item)
         {
             if (id != item.Id)
             {
@@ -82,7 +82,7 @@ namespace OpenSBIS.Controllers
 
             try
             {
-                _productRepository.Update(item);
+                _inventoryLocationRepository.Update(item);
             }
             catch (DataNotFoundException)
             {
@@ -93,17 +93,17 @@ namespace OpenSBIS.Controllers
         }
 
         /// <summary>
-        /// Deletes an product.
+        /// Deletes an inventoryLocation.
         /// </summary>
         /// <param name="id">
-        /// The id of the product to delete.
+        /// The id of the inventoryLocation to delete.
         /// </param>
         [HttpDelete("{id}")]
         public IActionResult Delete(long id)
         {
             try
             {
-                _productRepository.Delete(id);
+                _inventoryLocationRepository.Delete(id);
             }
             catch (DataNotFoundException)
             {

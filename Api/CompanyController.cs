@@ -7,37 +7,37 @@ using OpenSBIS.Models;
 namespace OpenSBIS.Controllers
 {
     [Route("api/[controller]")]
-    public class ProductController : Controller
+    public class CompanyController : Controller
     {
 
         private readonly ILogger _logger;
-        private readonly IProductRepository _productRepository;
+        private readonly ICompanyRepository _companyRepository;
 
-        public ProductController(ILogger<ProductController> logger, IProductRepository productRepository)
+        public CompanyController(ILogger<CompanyController> logger, ICompanyRepository companyRepository)
         {
             _logger = logger;
-            _productRepository = productRepository;
+            _companyRepository = companyRepository;
         }
 
         /// <summary>
-        /// Gets all products.
+        /// Gets all companys.
         /// </summary>
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_productRepository.GetAll());
+            return Ok(_companyRepository.GetAll());
         }
 
         /// <summary>
-        /// Gets product by id.
+        /// Gets company by id.
         /// </summary>
         /// <param name="id">
-        /// Product id.
+        /// Company id.
         /// </param>
-        [HttpGet("{id}", Name = "GetProduct")]
+        [HttpGet("{id}", Name = "GetCompany")]
         public IActionResult Get(long id)
         {
-            var data = _productRepository.Get(id);
+            var data = _companyRepository.Get(id);
 
             if (data == null)
             {
@@ -48,32 +48,32 @@ namespace OpenSBIS.Controllers
         }
 
         /// <summary>
-        /// Add a new product.
+        /// Add a new company.
         /// </summary>
         /// <param name="item">
-        /// The product to be added.
+        /// The company to be added.
         /// </param>
-        /// <returns>The new product</returns>
+        /// <returns>The new company</returns>
         [HttpPost]
-        public IActionResult Post([FromBody] Product item)
+        public IActionResult Post([FromBody] Company item)
         {
-            var id = _productRepository.Add(item);
-            var data = _productRepository.Get(id);
+            var id = _companyRepository.Add(item);
+            var data = _companyRepository.Get(id);
 
-            return CreatedAtRoute("GetProduct", new { id = id }, data);
+            return CreatedAtRoute("GetCompany", new { id = id }, data);
         }
 
         /// <summary>
-        /// Updates an product.
+        /// Updates an company.
         /// </summary>
         /// <param name="id">
-        /// The id of the product.
+        /// The id of the company.
         /// </param>
         /// <param name="item">
-        /// The updated product.
+        /// The updated company.
         /// </param>
         [HttpPut("{id}")]
-        public IActionResult Put(long id, [FromBody] Product item)
+        public IActionResult Put(long id, [FromBody] Company item)
         {
             if (id != item.Id)
             {
@@ -82,7 +82,7 @@ namespace OpenSBIS.Controllers
 
             try
             {
-                _productRepository.Update(item);
+                _companyRepository.Update(item);
             }
             catch (DataNotFoundException)
             {
@@ -93,17 +93,17 @@ namespace OpenSBIS.Controllers
         }
 
         /// <summary>
-        /// Deletes an product.
+        /// Deletes an company.
         /// </summary>
         /// <param name="id">
-        /// The id of the product to delete.
+        /// The id of the company to delete.
         /// </param>
         [HttpDelete("{id}")]
         public IActionResult Delete(long id)
         {
             try
             {
-                _productRepository.Delete(id);
+                _companyRepository.Delete(id);
             }
             catch (DataNotFoundException)
             {
