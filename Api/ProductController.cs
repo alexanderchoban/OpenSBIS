@@ -6,12 +6,12 @@ using Microsoft.Extensions.Logging;
 namespace OpenSBIS.Controllers
 {
     [Route("api/[controller]")]
-    public class InventoryController : Controller
+    public class ProductController : Controller
     {
 
         private readonly ILogger _logger;
 
-        public InventoryController(ILogger<InventoryController> logger)
+        public ProductController(ILogger<ProductController> logger)
         {
             _logger = logger;
         }
@@ -26,38 +26,38 @@ namespace OpenSBIS.Controllers
         }
 
         /// <summary>
-        /// Gets inventory item by id.
+        /// Gets product by id.
         /// </summary>
         /// <param name="id">
-        /// Inventory id.
+        /// Product id.
         /// </param>
-        [HttpGet("{id}", Name = "GetInventoryItem")]
+        [HttpGet("{id}", Name = "GetProductItem")]
         public IActionResult Get(Guid id)
         {
             return Ok("Item");
         }
 
         /// <summary>
-        /// Add a new inventory item.
+        /// Add a new product.
         /// </summary>
         /// <param name="item">
-        /// The inventory item to be added.
+        /// The product to be added.
         /// </param>
-        /// <returns>The new inventory item</returns>
+        /// <returns>The new product</returns>
         [HttpPost]
         public IActionResult Post([FromBody] string item)
         {
-            return CreatedAtRoute("GetInventoryItem", new { id = Guid.NewGuid() }, "new item");
+            return CreatedAtRoute("GetProductItem", new { id = Guid.NewGuid() }, "new item");
         }
 
         /// <summary>
-        /// Updates an inventory item.
+        /// Updates an product.
         /// </summary>
         /// <param name="id">
-        /// The id of the inventory item.
+        /// The id of the product.
         /// </param>
         /// <param name="item">
-        /// The updated inventory item.
+        /// The updated product.
         /// </param>
         [HttpPut("{id}")]
         public IActionResult Put(Guid id, [FromBody] string item)
@@ -68,10 +68,10 @@ namespace OpenSBIS.Controllers
         }
 
         /// <summary>
-        /// Deletes an inventory item.
+        /// Deletes an product.
         /// </summary>
         /// <param name="id">
-        /// The id of the inventory item to delete.
+        /// The id of the product to delete.
         /// </param>
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)

@@ -1,9 +1,8 @@
 # OpenSBIS
-Open Small Business Inventory System is a free and simple inventory system designed for small businesses. 
+Open Small Business Inventory System is a free and simple inventory system designed for small businesses. This application is built on ASP.NET Core and React.
 
 ## Build
 * set ASPNETCORE_ENVIRONMENT=Development or export ASPNETCORE_ENVIRONMENT=Development
-* webpack
 * dotnet run
 
 ## Publish

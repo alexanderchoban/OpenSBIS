@@ -9,7 +9,7 @@ namespace OpenSBIS.Models
         {
         }
 
-        public DbSet<InventoryItem> TodoItems { get; set; }
+        public DbSet<Product> TodoItems { get; set; }
 
     }
 }

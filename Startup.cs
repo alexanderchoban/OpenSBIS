@@ -8,8 +8,8 @@ using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using OpenSBIS.Models;
 using Microsoft.EntityFrameworkCore;
+using OpenSBIS.Models;
 
 namespace OpenSBIS
 {
@@ -23,20 +23,31 @@ namespace OpenSBIS
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
+            IsDevelopement = env.IsDevelopment();
         }
 
         public IConfigurationRoot Configuration { get; }
+        public bool IsDevelopement { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddDbContext<InventoryContext>(opt => opt.UseInMemoryDatabase());
             services.AddMvc();
+
+            if (IsDevelopement)
+            {
+                services.AddDbContext<InventoryContext>(options =>
+                    options.UseSqlite("Data Source=OpenSBIS-dev.db"));
+            }
+            else
+            {
+                throw new Exception("Production environment not configured.");
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, InventoryContext dbcontext)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -44,8 +55,10 @@ namespace OpenSBIS
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions {
-                    HotModuleReplacement = true
+                app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
+                {
+                    HotModuleReplacement = true,
+                    ReactHotModuleReplacement = true
                 });
             }
             else
@@ -65,6 +78,9 @@ namespace OpenSBIS
                     name: "spa-fallback",
                     defaults: new { controller = "Home", action = "Index" });
             });
+
+            // run database migrations on startup
+            dbcontext.Database.Migrate();
         }
     }
 }
