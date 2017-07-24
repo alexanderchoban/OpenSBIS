@@ -2,7 +2,9 @@
 Open Small Business Inventory System is a free and simple inventory system designed for small businesses. This application is built on ASP.NET Core and React.
 
 ## Build
-* set ASPNETCORE_ENVIRONMENT=Development or export ASPNETCORE_ENVIRONMENT=Development
+* npm install -g webpack (one time only)
+* set your environment variable of ASPNETCORE_ENVIRONMENT to Development (once per console window)
+* npm install (if it hasn't been run on the current directory)
 * dotnet run
 
 ## Publish
