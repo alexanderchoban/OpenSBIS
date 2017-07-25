@@ -7,7 +7,7 @@ interface CompaniesDataState {
     loading: boolean;
 }
 
-export class CompaniesList extends React.Component<{}, CompaniesDataState> {
+export class CompanyList extends React.Component<{}, CompaniesDataState> {
     constructor() {
         super();
         this.state = { companies: [], loading: true };
@@ -27,7 +27,7 @@ export class CompaniesList extends React.Component<{}, CompaniesDataState> {
             <h1>Companies</h1>
             <p>These are the current companies configured in the system.</p>
             {contents}
-            <Link className='btn btn-default' to={'/newcompany'}>Add</Link>
+            <Link className='btn btn-default' to={'/company-new'}>Add</Link>
         </div>;
     }
 
@@ -66,7 +66,11 @@ export class CompaniesList extends React.Component<{}, CompaniesDataState> {
                 {companies.map(company =>
                     <tr key={company.id}>
                         <td>{company.id}</td>
-                        <td>{company.name}</td>
+                        <td>
+                            <Link className='btn btn-link' to={'/company/' + company.id}>
+                                {company.name}
+                            </Link>
+                        </td>
                         <td><button className="btn btn-danger" value={company.id} onClick={this.deleteCompany}>Delete</button></td>
                     </tr>
                 )}

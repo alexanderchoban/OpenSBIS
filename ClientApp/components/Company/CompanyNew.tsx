@@ -8,12 +8,12 @@ import {
 } from 'react-router-dom'
 import 'isomorphic-fetch';
 
-interface AddCompanyDataState {
+interface CompanyNewDataState {
     name: string;
     done: boolean;
 }
 
-export class AddCompany extends React.Component<{}, AddCompanyDataState> {
+export class CompanyNew extends React.Component<{}, CompanyNewDataState> {
     constructor() {
         super();
         this.state = { name: "", done: false };
@@ -51,7 +51,7 @@ export class AddCompany extends React.Component<{}, AddCompanyDataState> {
     public render() {
         if (this.state.done) {
             return (
-                <Redirect to={"/companies"} />
+                <Redirect to={"/company"} />
             );
         }
 
