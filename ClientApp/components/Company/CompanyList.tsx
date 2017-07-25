@@ -15,7 +15,6 @@ export class CompanyList extends React.Component<{}, CompaniesDataState> {
 
         this.getData = this.getData.bind(this);
         this.deleteCompany = this.deleteCompany.bind(this);
-        this.deleteCompany = this.deleteCompany.bind(this);
     }
 
     public render() {
