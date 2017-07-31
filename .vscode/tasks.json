@@ -7,7 +7,7 @@
         {
             "taskName": "build",
             "args": [
-                "${workspaceRoot}/OpenSBIS.csproj"
+                "${workspaceRoot}/src/OpenSBIS/OpenSBIS.csproj"
             ],
             "isBuildCommand": true,
             "problemMatcher": "$msCompile"

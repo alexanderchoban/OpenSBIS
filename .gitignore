@@ -27,6 +27,7 @@ obj/
 Obj/
 dist/
 Dist/
+node_modules/
 
 # Visual Studio 2015 cache/options directory
 .vs/

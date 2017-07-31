@@ -1,0 +1,12 @@
+bin/
+obj/
+node_modules/
+dist/
+
+Dockerfile
+
+.git
+.vscode
+.dockerignore
+
+*.md
