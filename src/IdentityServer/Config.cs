@@ -5,6 +5,7 @@ using IdentityServer4;
 using IdentityServer4.Models;
 using System.Collections.Generic;
 using System.Security.Claims;
+using System;
 
 namespace IdentityServerWithAspNetIdentity
 {
@@ -73,8 +74,8 @@ namespace IdentityServerWithAspNetIdentity
                         new Secret("secret".Sha256())
                     },
 
-                    RedirectUris = { "http://localhost:5002/signin-oidc" },
-                    PostLogoutRedirectUris = { "http://localhost:5002" },
+                    RedirectUris = { Environment.GetEnvironmentVariable("MVC_URL") + "/signin-oidc" },
+                    PostLogoutRedirectUris = { Environment.GetEnvironmentVariable("MVC_URL") },
 
                     AllowedScopes =
                     {
@@ -83,24 +84,6 @@ namespace IdentityServerWithAspNetIdentity
                         "api1"
                     },
                     AllowOfflineAccess = true
-                },
-                new Client
-                {
-                    ClientId = "js",
-                    ClientName = "JavaScript Client",
-                    AllowedGrantTypes = GrantTypes.Implicit,
-                    AllowAccessTokensViaBrowser = true,
-
-                    RedirectUris =           { "http://localhost:5000/callback.html" },
-                    PostLogoutRedirectUris = { "http://localhost:5000/index.html" },
-                    AllowedCorsOrigins =     { "http://localhost:5000" },
-
-                    AllowedScopes =
-                    {
-                        IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile,
-                        "api1"
-                    }
                 }
             };
         }

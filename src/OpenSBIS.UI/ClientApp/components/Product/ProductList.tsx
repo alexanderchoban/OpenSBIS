@@ -41,7 +41,7 @@ export class ProductList extends React.Component<{}, productsDataState> {
 
     private getData(id) {
         this.setState({ products: [], loading: true });
-        var url = '/api/Product';
+        var url = process.env.API_URL + '/api/Product';
 
         if(id > 0)
         {
@@ -56,7 +56,7 @@ export class ProductList extends React.Component<{}, productsDataState> {
     }
 
     private async deleteProduct(event) {
-        await fetch('/api/Product/' + event.target.value, {
+        await fetch(process.env.API_URL + '/api/Product/' + event.target.value, {
             method: 'DELETE',
             headers: {
                 'Accept': 'application/json',

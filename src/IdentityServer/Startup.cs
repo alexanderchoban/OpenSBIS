@@ -68,15 +68,15 @@ namespace IdentityServerWithAspNetIdentity
             services.AddTransient<ISmsSender, AuthMessageSender>();
 
 
-            services.AddIdentityServer()
-            .AddSigningCredential(Certificate.Get())
-            .AddConfigurationStore(builder =>
-                builder.UseNpgsql(connectionString, options =>
-                options.MigrationsAssembly(migrationsAssembly)))
-            .AddOperationalStore(builder =>
-                builder.UseNpgsql(connectionString, options =>
-                options.MigrationsAssembly(migrationsAssembly)))
-            .AddAspNetIdentity<ApplicationUser>();
+            services.AddIdentityServer(x => x.IssuerUri = "null")
+                .AddSigningCredential(Certificate.Get())
+                .AddConfigurationStore(builder =>
+                    builder.UseNpgsql(connectionString, options =>
+                    options.MigrationsAssembly(migrationsAssembly)))
+                .AddOperationalStore(builder =>
+                    builder.UseNpgsql(connectionString, options =>
+                    options.MigrationsAssembly(migrationsAssembly)))
+                .AddAspNetIdentity<ApplicationUser>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

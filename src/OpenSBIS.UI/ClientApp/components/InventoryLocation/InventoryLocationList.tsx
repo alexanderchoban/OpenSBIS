@@ -41,7 +41,7 @@ export class InventoryLocationList extends React.Component<{}, inventoryLocation
 
     private getData(id) {
         this.setState({ inventoryLocations: [], loading: true });
-        var url = '/api/InventoryLocation';
+        var url = process.env.API_URL + '/api/InventoryLocation';
 
         if(id > 0)
         {
@@ -56,7 +56,7 @@ export class InventoryLocationList extends React.Component<{}, inventoryLocation
     }
 
     private async deleteInventoryLocation(event) {
-        await fetch('/api/InventoryLocation/' + event.target.value, {
+        await fetch(process.env.API_URL + '/api/InventoryLocation/' + event.target.value, {
             method: 'DELETE',
             headers: {
                 'Accept': 'application/json',

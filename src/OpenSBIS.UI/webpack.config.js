@@ -27,7 +27,12 @@ module.exports = (env) => {
             new webpack.DllReferencePlugin({
                 context: __dirname,
                 manifest: require('./wwwroot/dist/vendor-manifest.json')
-            })
+            }),
+            new webpack.DefinePlugin({
+                'process.env': {
+                  'API_URL': JSON.stringify(process.env.API_URL)
+                }
+              })
         ].concat(isDevBuild ? [
             // Plugins that apply in development builds only
             new webpack.SourceMapDevToolPlugin({

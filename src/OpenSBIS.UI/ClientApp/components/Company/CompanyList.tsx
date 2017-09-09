@@ -33,7 +33,7 @@ export class CompanyList extends React.Component<{}, CompaniesDataState> {
     private getData() {
         this.setState({ companies: [], loading: true });
 
-        fetch('/api/Company')
+        fetch(process.env.API_URL + '/api/Company')
             .then(response => response.json() as Promise<Company[]>)
             .then(data => {
                 this.setState({ companies: data, loading: false });
@@ -41,7 +41,7 @@ export class CompanyList extends React.Component<{}, CompaniesDataState> {
     }
 
     private async deleteCompany(event) {
-        await fetch('/api/company/' + event.target.value, {
+        await fetch(process.env.API_URL + '/api/company/' + event.target.value, {
             method: 'DELETE',
             headers: {
                 'Accept': 'application/json',

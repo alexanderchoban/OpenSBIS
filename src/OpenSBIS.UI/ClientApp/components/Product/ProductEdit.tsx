@@ -25,7 +25,7 @@ export class ProductEdit extends React.Component<{}, ProductEditState> {
         this.state = { id: 0, name: "", alertMessage: "", alertType: "hidden", companyId: 0, inventoryLocationId: 0, sku: "", quantity: 0, companyName: "" };
 
         const queryString = require('query-string');
-        fetch('/api/Product/' + location.href.substr(location.href.lastIndexOf('/') + 1))
+        fetch(process.env.API_URL + '/api/Product/' + location.href.substr(location.href.lastIndexOf('/') + 1))
             .then(response => response.json() as Promise<Product>)
             .then(data => {
                 this.setState({ companyName: data.company.name, id: data.id, name: data.name, companyId: data.companyId, inventoryLocationId: data.inventoryLocationId, sku: data.sku, quantity: data.quantity});
@@ -39,7 +39,7 @@ export class ProductEdit extends React.Component<{}, ProductEditState> {
     handleSubmit(event) {
         event.preventDefault();
 
-        fetch('/api/Product/' + this.state.id, {
+        fetch(process.env.API_URL + '/api/Product/' + this.state.id, {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',

@@ -41,7 +41,7 @@ export class CompanyDropDown extends React.Component<CompanyDropDownProps, Compa
     private getData() {
         this.setState({ companies: [], loading: true });
 
-        fetch('/api/Company')
+        fetch(process.env.API_URL + '/api/Company')
             .then(response => response.json() as Promise<Company[]>)
             .then(data => {
                 this.setState({ companies: data, loading: false });

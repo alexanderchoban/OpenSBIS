@@ -18,7 +18,7 @@ export class InventoryLocationEdit extends React.Component<{}, InventoryLocation
         this.state = { editName: "", alertMessage: "", alertType: "hidden", inventoryLocation: { id: 0, name: "Not Loaded", companyId: 0, company: { id: 0, name: "" } } };
 
         const queryString = require('query-string');
-        fetch('/api/InventoryLocation/' + location.href.substr(location.href.lastIndexOf('/') + 1))
+        fetch(process.env.API_URL + '/api/InventoryLocation/' + location.href.substr(location.href.lastIndexOf('/') + 1))
             .then(response => response.json() as Promise<InventoryLocation>)
             .then(data => {
                 this.setState({ editName: data.name , inventoryLocation: { id: data.id, name: data.name, companyId: data.companyId, company: { id: data.company.id, name: data.company.name } } });
@@ -32,7 +32,7 @@ export class InventoryLocationEdit extends React.Component<{}, InventoryLocation
     handleSubmit(event) {
         event.preventDefault();
 
-        fetch('/api/InventoryLocation/' + this.state.inventoryLocation.id, {
+        fetch(process.env.API_URL + '/api/InventoryLocation/' + this.state.inventoryLocation.id, {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',

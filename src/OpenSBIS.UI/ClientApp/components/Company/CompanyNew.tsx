@@ -1,42 +1,42 @@
 import * as React from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Redirect,
+  withRouter
+} from 'react-router-dom'
 import 'isomorphic-fetch';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
-interface Company {
-    id: number;
+interface CompanyNewDataState {
     name: string;
+    done: boolean;
 }
 
-export class CompanyEdit extends React.Component<{}, Company> {
+export class CompanyNew extends React.Component<{}, CompanyNewDataState> {
     constructor() {
         super();
-        this.state = { id: 0, name: "Not Loaded" };
-
-        const queryString = require('query-string');
-        fetch('/api/Company/' + location.href.substr(location.href.lastIndexOf('/') + 1))
-            .then(response => response.json() as Promise<Company>)
-            .then(data => {
-                this.setState({ id: data.id, name: data.name });
-            });
+        this.state = { name: "", done: false };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleSubmit(event) {
+    async handleSubmit(event) {
         event.preventDefault();
 
-        fetch('/api/company/' + this.state.id, {
-            method: 'PUT',
+        await fetch(process.env.API_URL + '/api/company', {
+            method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                Id: this.state.id,
                 Name: this.state.name
             })
         });
+
+        this.setState({ done: true });
     }
 
     handleChange(event) {
@@ -49,12 +49,16 @@ export class CompanyEdit extends React.Component<{}, Company> {
     }
 
     public render() {
+        if (this.state.done) {
+            return (
+                <Redirect to={"/company"} />
+            );
+        }
+
         return <div>
-            <h1>Edit Company</h1>
+            <h1>Add New Company</h1>
             <form onSubmit={this.handleSubmit}>
                 <div className="form-group">
-                    <label>Company Id</label>
-                    <input readOnly className="form-control" name="name" type="text" value={this.state.id} />
                     <label>Company Name</label>
                     <input className="form-control" name="name" type="text" value={this.state.name} onChange={this.handleChange} />
                 </div>
@@ -62,5 +66,6 @@ export class CompanyEdit extends React.Component<{}, Company> {
             </form>
         </div>;
     }
+
 }
 

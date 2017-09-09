@@ -1,7 +1,7 @@
 # OpenSBIS Web Client and API
 
 ## Development Build
-Before you can run locally, you will need a postgresql database and oauth server configured. The easiest way to set this up would be to run the solution's docker-composer file. (Optional: comment out the website section to save resources) And then continuing with the following sets:
+Before you can run locally, you will need a postgresql database, OpenSBIS API, and oauth server configured. The easiest way to set this up would be to run the solution's docker-composer file. (Optional: comment out the website section to save resources) And then continuing with the following sets:
 
 ### Dev-Build: Pre-Build 
 * npm install -g webpack (one time only)
@@ -14,9 +14,9 @@ Here's a quick quide for setting up environment variables for local testing in p
 <pre>
 $env:ASPNETCORE_ENVIRONMENT="Development"
 $env:ASPNETCORE_URLS="https://*:5005"
-$env:ConnectionString="User ID=opensbis;Password=FbaMCxGDtq69Frmk;Host=localhost;Port=5432;Database=opensbis;"
-$env:IDSRV_URL="http://localhost:5001"
+$env:IDSRV_URL="http://localhost:5002"
 $env:IDSRV_API="api1"
+$env:API_URL="http://localhost:5001"
 </pre>
 
 ### Dev-Build: Build

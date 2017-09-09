@@ -11,21 +11,31 @@ services:
             - POSTGRES_PASSWORD=FbaMCxGDtq69Frmk
             - IDSRV_USER=opensbis_idsrv
             - IDSRV_PASSWD=DgdYmTGUjs8rkv5B
-        ports:
-            - 5432:5432
 
-    opensbis.web:
-        image: opensbis/webserver
+    opensbis.ui:
+        image: opensbis/webui
         build:
-            context: ./src/OpenSBIS/
+            context: ./src/OpenSBIS.UI/
+            dockerfile: Dockerfile
+            args:
+                - API_URL=http://localhost:5001
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Production
+            - IDSRV_URL=opensbis.proxy:8080/identity
+            - IDSRV_API=api1
+            - HTTP_PROXY=opensbis.proxy:8080
+
+    opensbis.api:
+        image: opensbis/webapi
+        build:
+            context: ./src/OpenSBIS.API/
             dockerfile: Dockerfile
         environment:
             - ASPNETCORE_ENVIRONMENT=Production
             - ConnectionString=User ID=opensbis;Password=FbaMCxGDtq69Frmk;Host=opensbis.db;Port=5432;Database=opensbis;
-            - IDSRV_URL=http://identityserver.web
+            - IDSRV_URL=http://localhost:5002
             - IDSRV_API=api1
-        ports:
-            - 5000:80
+            - WEB_URL=http://localhost:5000
 
     identityserver.web:
         image: opensbis/identityserver
@@ -35,10 +45,10 @@ services:
         environment:
             - ASPNETCORE_ENVIRONMENT=Production
             - ConnectionString=User ID=opensbis_idsrv;Password=DgdYmTGUjs8rkv5B;Host=opensbis.db;Port=5432;Database=opensbis_idsrv;
-        ports:
-            - 5001:80
+            - MVC_URL=http://opensbis.web
 
     adminer:
         image: adminer
         ports:
             - 8080:8080
+

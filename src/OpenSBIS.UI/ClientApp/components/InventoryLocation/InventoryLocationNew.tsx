@@ -8,24 +8,20 @@ import {
 } from 'react-router-dom'
 import 'isomorphic-fetch';
 import { CompanyDropDown } from '../Controls/CompanyDropDown';
-import { InventoryLocationDropDown } from '../Controls/InventoryLocationDropDown';
 import { AlertBox } from '../Controls/AlertBox';
 
-interface ProductNewDataState {
+interface InventoryLocationNewDataState {
     name: string;
-    companyId: number;
+    company: number;
     done: boolean;
     alertMessage: string;
     alertType: string;
-    inventoryLocationId: number;
-    sku: string;
-    quantity: number;
 }
 
-export class ProductNew extends React.Component<{}, ProductNewDataState> {
+export class InventoryLocationNew extends React.Component<{}, InventoryLocationNewDataState> {
     constructor() {
         super();
-        this.state = { alertMessage: "", alertType: "hidden", name: "", companyId: 0, done: false, inventoryLocationId: 0, sku: "", quantity: 0 };
+        this.state = { alertMessage: "", alertType: "hidden", name: "", company: 0, done: false };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -35,7 +31,7 @@ export class ProductNew extends React.Component<{}, ProductNewDataState> {
     async handleSubmit(event) {
         event.preventDefault();
 
-        await fetch('/api/Product', {
+        await fetch(process.env.API_URL + '/api/InventoryLocation', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -43,10 +39,7 @@ export class ProductNew extends React.Component<{}, ProductNewDataState> {
             },
             body: JSON.stringify({
                 Name: this.state.name,
-                CompanyId: this.state.companyId,
-                InventoryLocationId: this.state.inventoryLocationId,
-                Sku: this.state.sku,
-                Quantity: this.state.quantity
+                CompanyId: this.state.company
             })
         })
         .then((response) => {
@@ -79,33 +72,21 @@ export class ProductNew extends React.Component<{}, ProductNewDataState> {
     public render() {
         if (this.state.done) {
             return (
-                <Redirect to={"/Product"} />
+                <Redirect to={"/InventoryLocation"} />
             );
         }
 
         return <div>
-            <h1>Add New Product</h1>
+            <h1>Add New Inventory Location</h1>
             <AlertBox message={this.state.alertMessage} type={this.state.alertType} onClick={this.closeAlert} />
             <form onSubmit={this.handleSubmit}>
                 <div className="form-group">
                     <label>Company</label>
-                    <CompanyDropDown name="companyId" onChange={this.handleChange} value={this.state.companyId} />
-                </div>
-                <div className="form-group">
-                    <label>Inventory Location</label>
-                    <InventoryLocationDropDown name="inventoryLocationId" onChange={this.handleChange} companyId={this.state.companyId} value={this.state.inventoryLocationId} allowAll="false" />
+                    <CompanyDropDown name="company" onChange={this.handleChange} value={this.state.company} />
                 </div>
                 <div className="form-group">
                     <label>Name</label>
                     <input className="form-control" name="name" type="text" value={this.state.name} onChange={this.handleChange} />
-                </div>
-                <div className="form-group">
-                    <label>SKU</label>
-                    <input className="form-control" name="sku" type="text" value={this.state.sku} onChange={this.handleChange} />
-                </div>
-                <div className="form-group">
-                    <label>Quantity</label>
-                    <input className="form-control" name="quantity" type="text" value={this.state.quantity} onChange={this.handleChange} />
                 </div>
                 <button className='btn btn-default' type="submit">Save</button>
             </form>

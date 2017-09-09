@@ -43,7 +43,7 @@ export class InventoryLocationDropDown extends React.Component<InventoryLocation
     private getData() {
         this.setState({ inventories: [], loading: true });
 
-        var url = '/api/InventoryLocation';
+        var url = process.env.API_URL + '/api/InventoryLocation';
 
         if (this.props.companyId > 0) {
             url += '?companyId=' + this.props.companyId;
