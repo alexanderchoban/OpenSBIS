@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 export class NavMenu extends React.Component<{}, {}> {
     public render() {
@@ -18,23 +18,13 @@ export class NavMenu extends React.Component<{}, {}> {
                 <div className='navbar-collapse collapse'>
                     <ul className='nav navbar-nav'>
                         <li>
-                            <NavLink to={ '/' } exact activeClassName='active'>
+                            <NavLink exact to={ '/' } activeClassName='active'>
                                 <span className='glyphicon glyphicon-home'></span> Home
                             </NavLink>
                         </li>
                         <li>
                             <NavLink to={ '/company' } activeClassName='active'>
-                                <span className='glyphicon glyphicon-oil'></span> Companies
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink to={ '/inventorylocation' } activeClassName='active'>
-                                <span className='glyphicon glyphicon-inbox'></span> Inventory Locations
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink to={ '/product' } activeClassName='active'>
-                                <span className='glyphicon glyphicon-tags'></span> Products
+                                <span className='glyphicon glyphicon-th-list'></span> Companies
                             </NavLink>
                         </li>
                     </ul>

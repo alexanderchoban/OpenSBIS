@@ -1,13 +1,7 @@
 import * as React from 'react';
-import 'oidc-client'
-const OidcClient = require('oidc-client');
+import { RouteComponentProps } from 'react-router-dom';
 
-export class Home extends React.Component<{}, {}> {
-    constructor() {
-        super();
-
-    }
-
+export default class Home extends React.Component<RouteComponentProps<{}>, {}> {
     public render() {
         return <div>
             <h1>Hello, world!</h1>

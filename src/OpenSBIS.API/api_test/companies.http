@@ -1,0 +1,41 @@
+# For use with humao.rest-client in vscode
+# Press F1, type ext install rest-client.
+
+# variables
+@host = http://localhost:5001
+@token = 
+
+
+### Add new company
+POST {{host}}/api/company
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "Name": "My Test Company"
+}
+
+### Get all companys
+GET {{host}}/api/company
+Content-Type: application/json
+Authorization: {{token}}
+
+### Get company
+GET {{host}}/api/company/1
+Content-Type: application/json
+Authorization: {{token}}
+
+### Update company
+PUT {{host}}/api/company/1
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "id": "1",
+  "Name": "My Updated Test Company"
+}
+
+### Delete company
+DELETE {{host}}/api/company/1
+Content-Type: application/json
+Authorization: {{token}}

@@ -44,9 +44,8 @@ namespace IdentityServerWithAspNetIdentity
         {
             if (!IsDevelopement)
             {
-                Console.Write("Waiting 10 seconds for production db to boot... ");
+                Console.Write("!!!\n!!! Waiting 10 seconds for production db to boot.\n!!!");
                 System.Threading.Thread.Sleep(10000);
-                Console.WriteLine("Done.");
             }
 
             // Add framework services.
@@ -68,7 +67,7 @@ namespace IdentityServerWithAspNetIdentity
             services.AddTransient<ISmsSender, AuthMessageSender>();
 
 
-            services.AddIdentityServer(x => x.IssuerUri = "null")
+            services.AddIdentityServer(x => x.IssuerUri = Environment.GetEnvironmentVariable("IDSRV_URL"))
                 .AddSigningCredential(Certificate.Get())
                 .AddConfigurationStore(builder =>
                     builder.UseNpgsql(connectionString, options =>

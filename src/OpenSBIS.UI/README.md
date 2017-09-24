@@ -1,10 +1,9 @@
 # OpenSBIS Web Client and API
 
 ## Development Build
-Before you can run locally, you will need a postgresql database, OpenSBIS API, and oauth server configured. The easiest way to set this up would be to run the solution's docker-composer file. (Optional: comment out the website section to save resources) And then continuing with the following sets:
+Before you can run locally, you will need a postgresql database, OpenSBIS API, and oauth server configured. The easiest way to set this up would be to run the solution's docker-composer file and then stop the opensbis/webui container. (Optional: comment out the website section to save resources) And then continuing with the following sets:
 
 ### Dev-Build: Pre-Build 
-* npm install -g webpack (one time only)
 * npm install (if it hasn't been run on the current directory)
 * set your environment variables (once per console window, see below)
 
