@@ -1,0 +1,42 @@
+# For use with humao.rest-client in vscode
+# Press F1, type ext install rest-client.
+
+# variables
+@host = http://localhost:5001
+@token = 
+
+
+### Add new inventorylocation
+POST {{host}}/api/inventorylocation
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "Name": "My Test Inventory",
+  "CompanyId": 1
+}
+
+### Get all inventorylocations
+GET {{host}}/api/inventorylocation
+Content-Type: application/json
+Authorization: {{token}}
+
+### Get inventorylocation
+GET {{host}}/api/inventorylocation/1
+Content-Type: application/json
+Authorization: {{token}}
+
+### Update inventorylocation
+PUT {{host}}/api/inventorylocation/1
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "id": "1",
+  "Name": "My Updated Test Company"
+}
+
+### Delete inventorylocation
+DELETE {{host}}/api/inventorylocation/1
+Content-Type: application/json
+Authorization: {{token}}

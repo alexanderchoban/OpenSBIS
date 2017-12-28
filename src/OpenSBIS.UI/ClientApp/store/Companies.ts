@@ -81,14 +81,9 @@ export const actionCreators = {
                 Name: companyName
             })
         })
+            .then(response => response.json() as Promise<Company>)
             .then(data => {
-                let fetchTask = fetch(`http://localhost:5001/api/company?userId=${userId}`)
-                    .then(response => response.json() as Promise<Company[]>)
-                    .then(data => {
-                        dispatch({ type: 'RECEIVE_COMPANIES', userId: userId, companies: data });
-                    });
-
-                addTask(fetchTask); // Ensure server-side prerendering waits for this to complete
+                dispatch({ type: 'ADD_COMPANY', company: data });
             });
 
         dispatch({ type: 'REQUEST_COMPANIES', userId: Number(getState().companies.userId) });
@@ -105,13 +100,7 @@ export const actionCreators = {
             body: JSON.stringify(compayToUpdate)
         })
             .then(data => {
-                let fetchTask = fetch(`http://localhost:5001/api/company?userId=${userId}`)
-                    .then(response => response.json() as Promise<Company[]>)
-                    .then(data => {
-                        dispatch({ type: 'RECEIVE_COMPANIES', userId: userId, companies: data });
-                    });
-
-                addTask(fetchTask); // Ensure server-side prerendering waits for this to complete
+                dispatch({ type: 'UPDATE_COMPANY', company: compayToUpdate });
             });
 
         dispatch({ type: 'REQUEST_COMPANIES', userId: Number(getState().companies.userId) });
@@ -127,13 +116,7 @@ export const actionCreators = {
             }
         })
             .then(data => {
-                let fetchTask = fetch(`http://localhost:5001/api/company?userId=${userId}`)
-                    .then(response => response.json() as Promise<Company[]>)
-                    .then(data => {
-                        dispatch({ type: 'RECEIVE_COMPANIES', userId: userId, companies: data });
-                    });
-
-                addTask(fetchTask); // Ensure server-side prerendering waits for this to complete
+                dispatch({ type: 'DELETE_COMPANY', companyId: companyId });
             });
 
         dispatch({ type: 'REQUEST_COMPANIES', userId: Number(getState().companies.userId) });
@@ -181,7 +164,8 @@ export const reducer: Reducer<CompaniesState> = (state: CompaniesState, incoming
                 isLoading: false
             };
         case 'UPDATE_COMPANY':
-            var data = state.companies;
+            var data = state.companies.filter(function (comp) { return comp.id != action.company.id });
+            data.push(action.company);
             return {
                 userId: state.userId,
                 companies: data,
