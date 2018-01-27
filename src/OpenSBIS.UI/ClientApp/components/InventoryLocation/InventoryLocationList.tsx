@@ -2,13 +2,13 @@ import * as React from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ApplicationState } from '../../store';
-import * as InventoryLocationsState from '../../store/InventoryLocations';
+import * as CompaniesState from '../../store/Companies';
 import { CompanyDropDown } from '../Controls/CompanyDropDown';
 
 // At runtime, Redux will merge together...
 type InventoryLocationListProps =
-    InventoryLocationsState.InventoryLocationsState        // ... state we've requested from the Redux store
-    & typeof InventoryLocationsState.actionCreators      // ... plus action creators we've requested
+    CompaniesState.CompaniesState        // ... state we've requested from the Redux store
+    & typeof CompaniesState.actionCreators      // ... plus action creators we've requested
     & RouteComponentProps<{ userId: string }>; // ... plus incoming routing parameters
 
 class InventoryLocationList extends React.Component<InventoryLocationListProps, {currentCompany: number}> {
@@ -23,6 +23,7 @@ class InventoryLocationList extends React.Component<InventoryLocationListProps, 
         // This method runs when the component is first added to the page
         let userId = parseInt(this.props.match.params.userId) || 0;
         this.props.requestInventoryLocations(userId);
+        this.props.requestCompanies(userId);
     }
 
     componentWillReceiveProps(nextProps: InventoryLocationListProps) {
@@ -39,7 +40,7 @@ class InventoryLocationList extends React.Component<InventoryLocationListProps, 
         return <div>
             <h1>InventoryLocations</h1>
             <p>Here are the inventoryLocations that your user has access to.</p>
-            <CompanyDropDown name="company" onChange={this.companyChange} value={this.state.currentCompany} />
+            <CompanyDropDown name="company" companies={this.props.companies} onChange={this.companyChange} value={this.state.currentCompany} />
             {contents}
             <Link className='btn btn-default' to={'/inventoryLocation-new'}>Add</Link>
         </div>;
@@ -81,6 +82,6 @@ class InventoryLocationList extends React.Component<InventoryLocationListProps, 
 }
 
 export default connect(
-    (state: ApplicationState) => state.inventoryLocations, // Selects which state properties are merged into the component's props
-    InventoryLocationsState.actionCreators,                 // Selects which action creators are merged into the component's props
+    (state: ApplicationState) => state.companies, // Selects which state properties are merged into the component's props
+    CompaniesState.actionCreators                 // Selects which action creators are merged into the component's props
 )(InventoryLocationList) as typeof InventoryLocationList;

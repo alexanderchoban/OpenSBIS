@@ -1,9 +1,6 @@
 import * as React from 'react';
 import 'isomorphic-fetch';
 import { Link, NavLink } from 'react-router-dom';
-import * as CompaniesState from '../../store/Companies';
-import { connect } from 'react-redux';
-import { ApplicationState } from '../../store';
 
 interface CompaniesDataState {
     loading: boolean;
@@ -15,12 +12,13 @@ interface CompanyDropDownProps {
     name: string;
     disabled?: string;
     value?: number;
+    companies: Company[];
 }
 
 export class CompanyDropDown extends React.Component<CompanyDropDownProps, CompaniesDataState> {
     constructor(props: CompanyDropDownProps) {
         super(props);
-        this.state = { loading: true, companies: [] };
+        this.state = { loading: true, companies: props.companies };
     }
 
     public static defaultProps: Partial<CompanyDropDownProps> = {
@@ -37,14 +35,18 @@ export class CompanyDropDown extends React.Component<CompanyDropDownProps, Compa
     }
 
     private renderCompanyDropDown(companies: Company[]) {
-        let html = <select className="form-control" value={this.props.value} onChange={this.props.onChange} name={this.props.name}>
+        if (companies != null) {
+        return <select className="form-control" value={this.props.value} onChange={this.props.onChange} name={this.props.name}>
                 <option value="0">Select...</option>
                 {companies.map(company =>
                     <option value={company.id}>{company.name}</option>
                 )}
         </select>;
+        }
 
-        return html;
+        return <select className="form-control" value={this.props.value} onChange={this.props.onChange} name={this.props.name}>
+            <option value="0">No companies.</option>
+        </select>
     }
 }
 
