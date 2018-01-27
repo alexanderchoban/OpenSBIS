@@ -25,6 +25,7 @@ services:
             - IDSRV_API=api1
         ports:
             - 5000:80
+
     opensbis.api:
         image: opensbis/webapi
         build:
